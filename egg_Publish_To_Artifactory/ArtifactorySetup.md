@@ -5,8 +5,10 @@
 
 * in Docker shell, discover the IP address (we need it later):
 
-<pre>$ echo $DOCKER_HOST</pre>
-<pre>tcp://192.168.99.100:2376</pre>
+<pre>
+$ echo $DOCKER_HOST
+tcp://192.168.99.100:2376
+</pre>
 
 * pull image:
 
@@ -24,6 +26,6 @@ docker run --name MyArtifactory -p 8081:8081 -p 80:80 -p 443:443 \
 jfrog-docker-reg2.bintray.io/jfrog/artifactory-oss:latest
 </pre>
 
-* browse to this link (using IP address from `DOCKER_HOST`): http://{DOCKER_HOST_VALUE_HERE}:8081/artifactory
+* browse to this link (using IP address from `DOCKER_HOST`): http://{DOCKER_HOST_IP}:8081/artifactory
     * default credentials are *admin/password*
 

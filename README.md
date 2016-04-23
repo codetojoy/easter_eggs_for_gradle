@@ -1,6 +1,6 @@
 # Introduction
 
-Easter's Eggs for build tools 
+Easter's Eggs for Gradle
 
 This does not refer to the secret-codes/tricks in video games! 
 

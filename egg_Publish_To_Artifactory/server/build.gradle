@@ -1,0 +1,33 @@
+apply plugin: 'java'
+
+allprojects {
+    apply from: "${rootDir}/gradle/versioning.gradle"
+}
+
+ext {
+    DOCKER_HOST = "192.168.99.100"
+    ARTIFACTORY_BASE_URL = "http://${DOCKER_HOST}:8081/artifactory"
+    RELEASE_REPO_URL = "${ARTIFACTORY_BASE_URL}/libs-release-local" 
+}
+
+repositories {
+    maven {
+        name "remoteArtifactory"
+        url RELEASE_REPO_URL
+
+        credentials {
+            username = artifactoryUsername
+            password = artifactoryPassword
+        }
+    }
+
+    mavenCentral()
+}
+
+dependencies {
+    compile group: 'net.codetojoy.common', name: 'codetojoy-common', version: project.version.toString() 
+
+    testCompile 'junit:junit:4.11'
+}
+
+

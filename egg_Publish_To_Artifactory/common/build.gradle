@@ -1,0 +1,50 @@
+
+apply plugin: 'java'
+apply plugin: 'distribution'
+apply plugin: 'maven-publish'
+
+allprojects {
+    apply from: "${rootDir}/gradle/versioning.gradle"
+}
+
+ext {
+    DOCKER_HOST = "192.168.99.100"
+    ARTIFACTORY_BASE_URL = "http://${DOCKER_HOST}:8081/artifactory"
+    RELEASE_REPO_URL = "${ARTIFACTORY_BASE_URL}/libs-release-local" 
+}
+
+archivesBaseName = 'codetojoy-common'
+group = 'net.codetojoy.common'
+version = project.version.toString()
+
+distributions {
+    main {
+        baseName = archivesBaseName
+
+        contents {
+            from libsDir
+        }
+    }
+}
+
+publishing {
+    publications {
+        codetojoy(MavenPublication) {
+            from components.java 
+            artifactId 'codetojoy-common'
+        }
+    }
+
+    repositories {
+        maven {
+            name "remoteArtifactory"
+            url RELEASE_REPO_URL
+
+            credentials {
+                username = artifactoryUsername
+                password = artifactoryPassword
+            }
+        }
+    }
+}
+

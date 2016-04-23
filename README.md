@@ -1,2 +1,7 @@
-# easter_eggs_for_gradle
-Define an 'egg' to be a simple example that offers a starting point / reference.
+# Introduction
+
+Easter's Eggs for build tools 
+
+This does not refer to the secret-codes/tricks in video games! 
+
+Define an 'egg' to be a simple example that offers a starting point. I like to keep examples/eggs around for reference, and wanted to share with the world. 

@@ -1,0 +1,77 @@
+
+apply plugin: 'war'
+apply plugin: 'jetty'
+apply plugin: 'maven-publish'
+
+apply from: "${rootDir}/gradle/versioning.gradle"
+
+ext {
+    DOCKER_HOST = "192.168.99.100"
+    ARTIFACTORY_BASE_URL = "http://${DOCKER_HOST}:8081/artifactory"
+    RELEASE_REPO_URL = "${ARTIFACTORY_BASE_URL}/libs-release-local" 
+}
+
+repositories {
+    maven {
+        name "remoteArtifactory"
+        url RELEASE_REPO_URL
+
+        credentials {
+            username = artifactoryUsername
+            password = artifactoryPassword
+        }
+    }
+
+    mavenCentral()
+}
+
+dependencies {
+    compile group: 'net.codetojoy.common', name: 'codetojoy-common', version: project.version.toString() 
+}
+
+task createBuildInfoFile << {
+    ant.mkdir(dir: buildDir)
+    def buildInfoFile = new File("${buildDir}/build-info.properties")
+    Properties props = new Properties()
+    props.setProperty('version', project.version.toString())
+    props.setProperty('timestamp', project.buildTimeStamp)
+    props.store(buildInfoFile.newWriter(), null)
+}
+
+war {
+    dependsOn createBuildInfoFile
+    baseName = 'codetojoy-user'
+
+    from(buildDir) {
+        include 'build-info.properties'
+        into('WEB-INF/classes')
+    }
+}
+
+publishing {
+    publications {
+        codetojoyWebApp(MavenPublication) {
+            from components.web
+            artifactId 'codetojoy-web'
+
+            pom.withXml {
+                def root = asNode()
+                root.appendNode('name', 'simple User webapp')
+                root.appendNode('description', 'misc descriptive text here')
+            }
+        }
+    }
+
+    repositories {
+        maven {
+            name 'remoteArtifactory'
+            url RELEASE_REPO_URL
+
+            credentials {
+                username = artifactoryUsername
+                password = artifactoryPassword
+            }
+        }
+    }
+}
+

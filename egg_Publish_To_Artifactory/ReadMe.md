@@ -24,3 +24,12 @@ gradle test
 * experiment like so:
     * modify the `UserDto.VERSION`
     * bump the `SOURCE_BUILD_NUMBER` and rebuild, republish etc
+
+* to test the common jar via the webapp project:
+
+<pre>
+cd web
+gradle clean jettyRunWar
+</pre>
+
+and browse to `http://localhost:8080/codetojoy-user/`

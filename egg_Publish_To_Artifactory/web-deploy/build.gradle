@@ -1,0 +1,38 @@
+
+apply plugin: 'maven-publish'
+
+apply from: "${rootDir}/gradle/versioning.gradle"
+
+ext {
+    DOCKER_HOST = "192.168.99.100"
+    ARTIFACTORY_BASE_URL = "http://${DOCKER_HOST}:8081/artifactory"
+    RELEASE_REPO_URL = "${ARTIFACTORY_BASE_URL}/libs-release-local" 
+}
+
+repositories {
+    maven {
+        name "remoteArtifactory"
+        url RELEASE_REPO_URL
+
+        credentials {
+            username = artifactoryUsername
+            password = artifactoryPassword
+        }
+    }
+}
+
+configurations {
+    codetojoyUserWebapp
+}
+
+dependencies {
+    codetojoyUserWebapp group: "net.codetojoy.web", name: "codetojoy-web", version: project.version.toString(), ext: 'war' 
+}
+
+def downloadDir = "${rootDir}/downloadDir"
+ant.mkdir(dir: downloadDir)
+
+task deployWarToDir(type: Copy) {
+    from configurations.codetojoyUserWebapp
+    into downloadDir
+}

@@ -33,3 +33,17 @@ gradle clean jettyRunWar
 </pre>
 
 and browse to `http://localhost:8080/codetojoy-user/`
+
+* to publish the webapp WAR file to Artifactory:
+
+<pre>
+cd web
+gradle publishCodetojoyWebAppPublicationToRemoteArtifactoryRepository
+</pre> 
+
+* to pull the webpp WAR file from Artifactory (in a simulated deployment):
+
+<pre>
+cd web-deploy
+gradle deployWarToDir
+</pre>

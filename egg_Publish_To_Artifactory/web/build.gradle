@@ -48,6 +48,8 @@ war {
     }
 }
 
+group 'net.codetojoy.web'
+
 publishing {
     publications {
         codetojoyWebApp(MavenPublication) {

@@ -1,0 +1,13 @@
+
+def IN_FILE = "${buildDir}/../in.txt"
+def OUT_FILE = "${buildDir}/../out.txt"
+
+task foo() {
+    inputs.file new File(IN_FILE)
+    outputs.file new File(OUT_FILE)
+
+    doLast {
+        ant.copy(file: IN_FILE, tofile: OUT_FILE)
+    }
+}
+

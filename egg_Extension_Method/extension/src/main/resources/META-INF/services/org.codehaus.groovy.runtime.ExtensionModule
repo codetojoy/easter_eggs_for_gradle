@@ -1,0 +1,4 @@
+# File: src/main/resources/META-INF/services/org.codehaus.groovy.runtime.ExtensionModule
+moduleName = camel-case-module
+moduleVersion = 1.0
+extensionClasses = net.codetojoy.ext.CamelCaseExtension

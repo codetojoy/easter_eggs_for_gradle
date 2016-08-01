@@ -1,0 +1,14 @@
+
+apply plugin: 'groovy'
+
+def JARS_DIR = "${projectDir}/jars"
+ant.mkdir(dir: JARS_DIR)
+
+allprojects {
+    repositories {
+        mavenCentral()
+    }
+
+    project.ext.jarsDir = JARS_DIR
+}
+

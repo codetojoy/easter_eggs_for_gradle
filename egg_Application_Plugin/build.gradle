@@ -1,0 +1,27 @@
+
+apply plugin: 'groovy'
+apply plugin: 'application'
+
+mainClassName = "net.codetojoy.waro.Main"
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile 'org.codehaus.groovy:groovy-all:1.6.4'
+    compile 'com.google.guava:guava-collections:r03'
+}
+
+run {
+    args "config.groovy"
+}
+
+installDist.doFirst {
+    ant.delete(dir: project.stagingDir)
+}
+
+installDist {
+    into project.stagingDir
+}
+

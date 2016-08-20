@@ -1,0 +1,17 @@
+buildscript {
+    dependencies {
+        classpath files('../egg_Custom_Plugin/build/libs/egg_Custom_Plugin.jar')
+    }
+}
+
+apply plugin: 'net.codetojoy.scaffolding'
+
+def destDir = "/Users/measter/tmp/20.aug.groovy"
+ant.mkdir(dir: destDir)
+
+scaffolding {
+    destination destDir
+    projectType "groovy"
+    targetPackage "net.codetojoy"
+}
+

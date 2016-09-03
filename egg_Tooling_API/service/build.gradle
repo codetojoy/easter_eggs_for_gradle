@@ -1,0 +1,13 @@
+
+task runService() << {
+    ant.delete(file: "out.log")
+    def count = 0
+    while(true) {
+        new File("out.log").withWriterAppend {
+            it.writeLine("[runService] count: ${count}")
+        }
+        println "sleeping ...."
+        try { Thread.sleep(5 * 1000) } catch (Exception ex) {}
+        count++
+    }
+}

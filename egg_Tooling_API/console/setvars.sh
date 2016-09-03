@@ -1,0 +1,4 @@
+
+export CLASSPATH=.
+export CLASSPATH=$CLASSPATH:$GRADLE_HOME/lib/*
+

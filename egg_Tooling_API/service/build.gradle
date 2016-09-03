@@ -1,9 +1,9 @@
 
 task runService() << {
-    ant.delete(file: "out.log")
+    ant.delete(file: "runService.log")
     def count = 0
     while(true) {
-        new File("out.log").withWriterAppend {
+        new File("runService.log").withWriterAppend {
             it.writeLine("[runService] count: ${count}")
         }
         println "sleeping ...."

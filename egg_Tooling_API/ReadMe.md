@@ -1,7 +1,7 @@
 
 # Notes
 
-* This example illustrates usage of the Tooling API
+* This example illustrates usage of the [Tooling API](https://docs.gradle.org/current/userguide/embedding.html)
     
 * The `service` project has a task `runService` that appends to a file indefinitely.
 

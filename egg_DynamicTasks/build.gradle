@@ -1,0 +1,25 @@
+
+def dynamicTaskNames = ["task1", "task2", "task3"]
+def previousTaskName 
+
+dynamicTaskNames.eachWithIndex { taskName, index ->
+    task "${taskName}" {
+        println "[config  phase]: ${taskName}"
+    }
+
+    def thisTask = tasks.find{ it.name == taskName }
+
+    if (index > 0) { 
+        thisTask.mustRunAfter previousTaskName
+    }
+
+    thisTask.doLast {
+        println "[execution phase]: ${taskName}"
+    } 
+
+    previousTaskName = taskName
+}
+
+task primary(dependsOn: dynamicTaskNames) << {
+    println ("Primary task done.")
+}

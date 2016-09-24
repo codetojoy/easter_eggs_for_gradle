@@ -1,0 +1,47 @@
+
+// see https://github.com/bmuschko/gradle-tomcat-plugin
+
+buildscript {
+    repositories {
+        jcenter()
+    }
+
+    dependencies {
+        classpath 'com.bmuschko:gradle-tomcat-plugin:2.2.5'
+    }
+}
+
+apply plugin: 'com.bmuschko.tomcat'
+apply plugin: 'war'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    def tomcatVersion = '7.0.59'
+    tomcat "org.apache.tomcat.embed:tomcat-embed-core:${tomcatVersion}",
+           "org.apache.tomcat.embed:tomcat-embed-logging-juli:${tomcatVersion}",
+           "org.apache.tomcat.embed:tomcat-embed-jasper:${tomcatVersion}"
+}
+
+tomcat {
+    httpPort = 5250
+    httpsPort = 5251
+    enableSSL = true
+    contextPath = 'sandbox'
+
+    users {
+        user {
+            username = 'foo'
+            password = '123456'
+            roles = ['developers', 'admin']
+        }
+
+        user {
+            username = 'bar'
+            password = 'abcdef'
+            roles = ['manager']
+        }
+    }
+}

@@ -2,7 +2,7 @@
 package net.codetojoy.utils;
 
 public class StringUtils {
-    public static final int BUILD_NUMBER = 778;
+    public static final int BUILD_NUMBER = 700;
 
     public boolean safeIsNotEmpty(String s) {
         boolean result = false;

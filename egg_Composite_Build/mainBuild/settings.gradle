@@ -6,6 +6,6 @@ rootProject.name='main'
 //      - that is, it will use the local source-code
 //
 // includeBuild '../utils'
-includeBuild '../service'
+// includeBuild '../service'
 
 includeBuild '../app'

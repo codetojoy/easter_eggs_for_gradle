@@ -1,0 +1,25 @@
+
+apply plugin: 'java'
+
+group = 'net.codetojoy'
+archivesBaseName = 'utils'
+version = '9.1'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testCompile 'junit:junit:4.12' 
+}
+
+jar {
+    baseName 'utils'
+    version '9.1'
+}
+
+uploadArchives {
+    repositories {
+        flatDir(dir: "${projectDir}/../jars")
+    }
+}

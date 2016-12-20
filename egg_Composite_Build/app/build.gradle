@@ -1,0 +1,42 @@
+
+apply plugin: 'application'
+apply plugin: 'java'
+
+mainClassName = 'net.codetojoy.app.Runner'
+
+group = 'net.codetojoy'
+archivesBaseName = 'app'
+version = '1.0'
+
+repositories {
+    flatDir(dir: "${projectDir}/../jars")
+}
+
+dependencies {
+    compile 'net.codetojoy:service:2.2'
+
+    runtime 'net.codetojoy:utils:9.1'
+}
+
+jar {
+    baseName 'app'
+    version '1.0'
+}
+
+run {
+    args "buildinfo"
+}
+
+installDist.doFirst {
+    ant.delete(dir: project.stagingDir)
+}
+
+installDist {
+    into project.stagingDir
+}
+
+uploadArchives {
+    repositories {
+        flatDir(dir: "${projectDir}/../jars")
+    }
+}

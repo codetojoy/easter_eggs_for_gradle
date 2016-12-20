@@ -1,0 +1,25 @@
+
+apply plugin: 'java'
+
+group = 'net.codetojoy'
+archivesBaseName = 'service'
+version = '2.2'
+
+repositories {
+    flatDir(dir: "${projectDir}/../jars")
+}
+
+dependencies {
+    compile 'net.codetojoy:utils:9.1'
+}
+
+jar {
+    baseName 'service'
+    version '2.2'
+}
+
+uploadArchives {
+    repositories {
+        flatDir(dir: "${projectDir}/../jars")
+    }
+}

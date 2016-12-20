@@ -1,0 +1,11 @@
+
+rootProject.name='main'
+
+// when commented out, 'gradle run' will use the jars in ../jars
+// if uncommented, 'gradle run' will use the build in isolation
+//      - that is, it will use the local source-code
+//
+// includeBuild '../utils'
+includeBuild '../service'
+
+includeBuild '../app'

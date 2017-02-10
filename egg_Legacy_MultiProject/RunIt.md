@@ -4,23 +4,32 @@
 * to build all projects:
 
 <pre>
+# find command is for illustration only
 find . -name "*.jar" -exec rm {} \; 
+
 gradle build -p build_all 
+
 find . -name "*.jar"
 </pre>
 
-* to build 'A' projects;
+* to build 'A' projects:
 
 <pre>
+# find command is for illustration only
 find . -name "*.jar" -exec rm {} \; 
+
 gradle build -p build_As 
+
 find . -name "*.jar"
 </pre>
 
-* to build '2' projects;
+* to build '2' projects:
 
 <pre>
+# find command is for illustration only
 find . -name "*.jar" -exec rm {} \; 
+
 gradle build -p build_2s 
+
 find . -name "*.jar"
 </pre>

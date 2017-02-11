@@ -1,1 +1,1 @@
-include 'projA2', 'projB2'
+include ':service:projA2', ':component:common:projB2'

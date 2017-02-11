@@ -1,1 +1,2 @@
-include 'projA1', 'projA2', 'projA3', 'projB1', 'projB2', 'projB3'
+include 'projA1', ':service:projA2', ':component:client:projA3', 
+        'projB1', ':component:common:projB2', ':component:common:projB3'

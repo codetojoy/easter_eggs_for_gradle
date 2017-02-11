@@ -1,0 +1,20 @@
+
+
+subprojects {
+    apply plugin: 'java-library'
+
+    repositories {
+        jcenter()
+    }
+
+    compileJava {
+        doFirst {
+            println "TRACER [${project.name}]"
+            sourceSets.main.compileClasspath.each { 
+                if (it.name ==~ /.*jar/) {
+                    println ">>  " + it.name 
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,22 @@
+
+apply plugin: 'java-library'
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+    implementation 'log4j:log4j:1.2.17'
+    implementation 'org.apache.commons:commons-lang3:3.5'
+}
+
+compileJava {
+    doFirst {
+        println "TRACER [utils]"
+        sourceSets.main.runtimeClasspath.each { 
+            if (it.name ==~ /.*jar/) {
+                println ">>  " + it.name 
+            }
+        }
+    }
+}

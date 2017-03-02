@@ -1,7 +1,3 @@
-# Introduction
-
-Easter's Eggs for Gradle
-
-This does not refer to the secret-codes/tricks in video games! 
-
-Define an 'egg' to be a simple example that offers a starting point. I like to keep examples/eggs around for reference, and wanted to share with the world. 
+### easter_eggs_for_gradle
+- some basic examples for Gradle 
+- usage of *egg* here is [SSCCE](http://sscce.org/) **not** a [hidden feature](https://en.wikipedia.org/wiki/Easter_egg_(media))

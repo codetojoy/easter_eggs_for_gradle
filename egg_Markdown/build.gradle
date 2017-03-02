@@ -1,0 +1,24 @@
+
+defaultTasks 'markdownToHtml'
+
+buildscript {
+    repositories {
+        jcenter()
+        maven { url 'http://dl.bintray.com/content/aalmiray/kordamp' }
+    }
+    dependencies {
+        classpath 'org.kordamp:markdown-gradle-plugin:1.0.0'
+    }
+}
+
+apply plugin: 'org.kordamp.markdown.convert'
+
+def SOURCE_DIR = "input"
+def OUTPUT_DIR = "output"
+
+ant.delete(dir: OUTPUT_DIR)
+ant.mkdir(dir: OUTPUT_DIR)
+
+markdownToHtml.sourceDir new File(SOURCE_DIR)
+markdownToHtml.outputDir new File(OUTPUT_DIR)
+

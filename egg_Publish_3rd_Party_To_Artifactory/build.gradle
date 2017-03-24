@@ -1,0 +1,27 @@
+apply plugin:'maven'
+
+configurations{
+    allJars
+}
+
+def TARGET_JAR = "jsr311-api-1.1.1.jar"
+def TARGET_TRIM = "jsr311-api.jar"
+
+group = "foo.third.party"
+version = "1.1.1"
+
+ant.copy(file: "${projectDir}/${TARGET_JAR}", tofile: TARGET_TRIM)
+
+artifacts{
+    allJars file("${projectDir}/${TARGET_TRIM}")
+}
+
+uploadAllJars {
+   repositories {  
+        mavenDeployer {  
+            repository(url: 'http://localhost:8081/artifactory/ext-release-local') {  
+                authentication(userName: 'admin', password: 'password')
+            }
+        }
+   }
+}  

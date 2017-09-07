@@ -1,0 +1,37 @@
+
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.github.jengelman.gradle.plugins:shadow:2.0.1'
+    }
+}
+
+apply plugin: 'com.github.johnrengelman.shadow'
+apply plugin: 'groovy'
+apply plugin: 'application'
+
+mainClassName = "net.codetojoy.waro.Main"
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+    compile 'org.codehaus.groovy:groovy-all:2.4.12'
+    compile 'com.google.guava:guava:23.0'
+
+    testCompile 'junit:junit:4.12'
+}
+
+run {
+    args "config.groovy"
+}
+
+shadowJar {
+   baseName = 'waro-executable'
+   classifier = null
+   version = null
+}
+

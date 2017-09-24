@@ -21,3 +21,4 @@ dependencies {
 
 mainClassName = 'net.codetojoy.example.App'
 
+build.dependsOn shadowJar

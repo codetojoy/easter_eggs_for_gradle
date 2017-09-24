@@ -23,6 +23,11 @@ dependencies {
 
     compile project(':lib:libA')
     compile project(':lib:libB')
+
+    runtime 'log4j:log4j:1.2.16'
+    runtime 'org.apache.commons:commons-lang3:3.1'
+    runtime 'commons-codec:commons-codec:1.6'
+    runtime 'org.xerial:sqlite-jdbc:3.16.1'
 }
 
 mainClassName = 'net.codetojoy.example.App'

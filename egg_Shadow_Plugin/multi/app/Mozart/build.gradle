@@ -1,0 +1,21 @@
+
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.github.jengelman.gradle.plugins:shadow:2.0.1'
+    }
+}
+
+apply plugin: 'com.github.johnrengelman.shadow'
+
+dependencies {
+    compile 'joda-time:joda-time:2.8.1'
+
+    compile project(':lib:libA')
+    compile project(':lib:libB')
+}
+
+mainClassName = 'net.codetojoy.example.App'
+

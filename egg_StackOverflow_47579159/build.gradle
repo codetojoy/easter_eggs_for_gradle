@@ -1,0 +1,70 @@
+
+apply plugin: 'java'
+
+repositories {
+    jcenter()
+}
+
+configurations {
+    compileA
+    compileB
+}
+
+dependencies {
+    compile 'org.apache.commons:commons-lang3:3.7'
+
+    compileA('postgresql:postgresql:8.4-702.jdbc4')
+    compileB('org.postgresql:postgresql:42.1.1.jre7')
+}
+
+sourceSets {
+    myCompile {
+        java {
+          srcDirs = ['src/main/java']
+        }
+    }
+}
+
+task cleanA() {
+    doLast {
+        ant.delete(dir: 'build/classesA')
+    }
+}
+
+task compileJavaA(type: JavaCompile, dependsOn: 'cleanA') {
+    classpath = configurations.compileA
+    classpath += configurations.compile
+    source = sourceSets.myCompile.allSource.srcDirs
+    destinationDir = file('build/classesA')
+}
+
+task buildJarA(type: Jar, dependsOn: 'compileJavaA') {
+    baseName 'jarA'
+    from files('build/classesA') {  
+        include '**/*.class'
+    }
+}
+
+task cleanB() {
+    doLast {
+        ant.delete(dir: 'build/classesB')
+    }
+}
+
+task compileJavaB(type: JavaCompile, dependsOn: 'cleanB') {
+    classpath = configurations.compileB 
+    classpath += configurations.compile
+    source = sourceSets.myCompile.allSource.srcDirs
+    destinationDir = file('build/classesB')
+}
+
+task buildJarB(type: Jar, dependsOn: 'compileJavaB') {
+    baseName 'jarB'
+    from files('build/classesB') {  
+        include '**/*.class'
+    }
+}
+
+task buildJars(dependsOn: ['buildJarA', 'buildJarB']) {
+}
+

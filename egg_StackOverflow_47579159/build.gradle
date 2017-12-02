@@ -43,6 +43,7 @@ task buildJarA(type: Jar, dependsOn: 'compileJavaA') {
     from files('build/classesA') {  
         include '**/*.class'
     }
+    from { configurations.compileA.collect { it.isDirectory() ? it : zipTree(it) } }
 }
 
 task cleanB() {
@@ -63,6 +64,7 @@ task buildJarB(type: Jar, dependsOn: 'compileJavaB') {
     from files('build/classesB') {  
         include '**/*.class'
     }
+    from { configurations.compileB.collect { it.isDirectory() ? it : zipTree(it) } }
 }
 
 task buildJars(dependsOn: ['buildJarA', 'buildJarB']) {

@@ -1,0 +1,6 @@
+
+task myDeploy() {
+    doLast {
+        println "TRACER myDeploy"
+    }
+}

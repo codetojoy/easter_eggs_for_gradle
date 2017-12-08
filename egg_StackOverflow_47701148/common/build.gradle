@@ -1,0 +1,6 @@
+
+task myCommonTask(dependsOn: 'myDeploy') {
+    doLast {
+        println 'TRACER myCommonTask'
+    }
+}

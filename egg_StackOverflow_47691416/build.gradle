@@ -1,0 +1,15 @@
+
+subprojects { project ->
+    apply plugin: 'java'
+
+    task findFile() {
+        doLast {
+            def targetFile = project.targetFile
+            project.sourceSets.main.java.each { file -> 
+                if (file.absolutePath.contains(targetFile)) {
+                    println "TRACER found ${targetFile} in project: ${project.name}"
+                }
+            } 
+        }
+    } 
+}

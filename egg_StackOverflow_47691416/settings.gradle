@@ -1,0 +1,1 @@
+include 'project-a', 'project-a:project-a-b', 'project-c'

@@ -18,7 +18,6 @@ if (failures.exists()) {
     }
 }
 failures.delete()
-def doRunFailures = project.properties["DO_RUN_FAILURES"]
 
 test {
     filter {

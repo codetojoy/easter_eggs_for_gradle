@@ -9,5 +9,5 @@
 * execute:
     * rm -rf src
     * cp -r src.all.pass src
-* `gradle test -PDO_RUN_FAILURES=true`
-    * observe 2 failed tests now pass 
+* `gradle test`
+    * observe 2 failed tests are executed (and now pass)

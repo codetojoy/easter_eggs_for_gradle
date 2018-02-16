@@ -7,6 +7,6 @@ import static org.junit.Assert.*;
 public class TestRedA {
     @Test
     public void testRedA() {
-        assertEquals(4, 2+2);
+        assertEquals(5, 2+2);
     }
 }

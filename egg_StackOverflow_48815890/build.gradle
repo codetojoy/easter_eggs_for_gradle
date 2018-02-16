@@ -1,0 +1,37 @@
+
+apply plugin: 'java'
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+    testCompile('junit:junit:4.12')
+}   
+
+def failures = new File("${projectDir}/failures.log")
+def failedTests = [] 
+if (failures.exists()) {
+    failures.eachLine { line ->
+        def tokens = line.split(",")
+        failedTests << tokens[0] 
+    }
+}
+failures.delete()
+def doRunFailures = project.properties["DO_RUN_FAILURES"]
+
+test {
+    filter {
+        failedTests.each { 
+            includeTestsMatching "${it}"
+        }
+    }
+
+    afterTest { desc, result -> 
+        if ("FAILURE" == result.resultType as String) {
+            failures.withWriterAppend { 
+                it.write("${desc.className},${desc.name}\n")
+            }
+        }
+    }
+}

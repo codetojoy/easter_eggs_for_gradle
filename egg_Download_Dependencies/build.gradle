@@ -1,11 +1,19 @@
 
 apply plugin: 'java'
 
+/*
+Usage
+
+* edit jar list below
+* run: gradle clean getDeps
+* examine `runtime` dir
+*/
+
 dependencies {
-    compile 'org.apache.httpcomponents:httpclient:4.5.5'
-    compile 'org.apache.httpcomponents:httpclient-cache:4.5.5'
-    compile 'org.apache.httpcomponents:httpcore:4.4.9'
-    compile 'org.apache.httpcomponents:httpmime:4.5.5'
+    compile 'org.apache.httpcomponents:httpclient:4.2.5'
+    compile 'org.apache.httpcomponents:httpclient-cache:4.2.5'
+    compile 'org.apache.httpcomponents:httpcore:4.2.4'
+    compile 'org.apache.httpcomponents:httpmime:4.2.5'
 }
 
 repositories { 

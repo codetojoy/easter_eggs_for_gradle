@@ -1,0 +1,28 @@
+
+apply plugin: 'java'
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+    compile 'com.google.guava:guava:24.1.1-jre'
+}
+
+version = ""
+
+def classpathStr = configurations.runtimeClasspath.files.collect{ it.name }.join(' ')
+
+task fatJar(type: Jar) {
+    manifest {
+        attributes 'Implementation-Title': 'Gradle Jar File Example',
+        'Implementation-Version': version,
+        'Main-Class': 'EntryPoint',
+        'Class-Path': classpathStr
+        exclude 'META-INF/*.RSA', 'META-INF/*.SF','META-INF/*.DSA'
+    }
+    baseName = "example"
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    with jar
+}
+

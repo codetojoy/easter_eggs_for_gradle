@@ -1,0 +1,7 @@
+
+task stagingZip(type: Sync) {
+    from zipTree('data/data.zip')
+    into 'staging'
+    fileMode 0644
+}
+

@@ -1,5 +1,5 @@
 
-task stagingZip(type: Sync) {
+task stageZip(type: Sync) {
     from zipTree('data/data.zip')
     into 'staging'
     fileMode 0644

@@ -1,0 +1,28 @@
+
+import java.nio.file.*
+import java.nio.file.attribute.PosixFilePermission
+
+def addWritePerm = { file ->
+    println "TRACER adding 'w' to : " + file.absolutePath
+    def path = Paths.get(file.absolutePath)
+    def perms = Files.getPosixFilePermissions(path)
+    perms << PosixFilePermission.OWNER_WRITE
+    Files.setPosixFilePermissions(path, perms)
+}
+
+project.ext.stagingFolder = 'staging'
+project.ext.zipFile = 'data/data.zip'
+
+task stageZip(type: Copy) {
+    from({ zipTree(project.ext.zipFile) })
+    into project.ext.stagingFolder
+
+    doLast {
+        new File(project.ext.stagingFolder)
+            .eachFileRecurse { def file ->
+            if (! file.canWrite()) {
+                addWritePerm(file)
+            }
+        }
+    }
+}

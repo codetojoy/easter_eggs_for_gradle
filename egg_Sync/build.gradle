@@ -1,0 +1,5 @@
+
+task mySync(type: Sync) {
+    from "${projectDir}/dirSrc"
+    into "${projectDir}/dirDest"
+}

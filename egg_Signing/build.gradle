@@ -1,0 +1,102 @@
+
+apply plugin: 'war'
+apply plugin: 'maven-publish'
+apply plugin: 'signing'
+
+apply from: "${rootDir}/gradle/version.gradle"
+apply from: "${rootDir}/gradle/info.gradle"
+
+repositories {
+    mavenLocal() 
+
+    maven {
+        name "remoteArtifactory"
+        url REPOSITORY_URL
+
+        credentials {
+            username = artifactoryUsername
+            password = artifactoryPassword
+        }
+    }
+
+    jcenter()
+}
+
+dependencies {}
+
+war {
+    baseName = 'simple_app'
+
+    from(buildDir) {
+        include 'build-info.properties'
+        into('WEB-INF/classes')
+    }
+}
+
+// ---------------------------------------------
+// war file
+
+group 'net.codetojoy'
+def thisArtifactId = "simple_app"
+
+// do during config phase:
+ant.mkdir(dir: "${projectDir}/src/main/java/net/codetojoy/web")
+def newBuildInfoFile = new File("${projectDir}/src/main/java/net/codetojoy/web/BuildInfo.java")
+def templateBuildInfoFile = new File("${projectDir}/resources/TemplateBuildInfo.java")
+
+newBuildInfoFile.withWriter { def writer ->
+    templateBuildInfoFile.eachLine { def line ->
+        def newLine = line.replace("__PACKAGE", "net.codetojoy.web")
+                          .replace("__ARTIFACT", thisArtifactId)
+                          .replace("__VERSION", project.version)
+                          .replace("__BUILD_TIMESTAMP", buildTimeStamp)
+        writer.write(newLine + "\n");
+    }
+}
+
+task devTest() {
+    doLast {
+        println "TRACER devTest"
+
+        println "TRACER TARGET_GIT_HASH : " + project.TARGET_GIT_HASH
+        println "TRACER TARGET_ENV : " + project.TARGET_ENV
+        
+        def url = getArtifactoryURLByGitHash(project.TARGET_ENV, project.TARGET_GIT_HASH)
+        println "TRACER url ${url}"
+    }
+}
+
+// ---------------------------------------------
+// Publishing
+
+publishing {
+    publications {
+        codetojoySimpleApp(MavenPublication) {
+            from components.web
+            artifactId thisArtifactId
+
+            pom.withXml {
+                def root = asNode()
+                def props = root.appendNode('properties')
+                props.appendNode('foo-buildTimeStamp', buildTimeStamp)
+            }
+        }
+    }
+
+    repositories {
+        maven {
+            name 'remoteArtifactory'
+            url REPOSITORY_URL
+
+            credentials {
+                username = artifactoryUsername
+                password = artifactoryPassword
+            }
+        }
+    }
+}
+
+signing {
+    sign publishing.publications.codetojoySimpleApp
+}
+

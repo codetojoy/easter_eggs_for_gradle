@@ -1,0 +1,42 @@
+
+import java.time.*
+import java.time.format.*
+
+def getEnvVarWithCheck = { def var ->
+    def result = System.env."${var}"
+
+    if ((result == null) || (result.trim() == "")) {
+        throw GradleException("FATAL: could not find ENV VAR: " + var)
+    }
+
+    return result
+}
+
+ext.majorVersion = getEnvVarWithCheck "TRUNK_MAJOR_VERSION"
+ext.minorVersion = getEnvVarWithCheck "TRUNK_MINOR_VERSION"
+ext.incrementalVersion = getEnvVarWithCheck "TRUNK_INCREMENTAL_VERSION"
+ext.qualifier = getEnvVarWithCheck "TRUNK_QUALIFIER"
+ext.buildNumber = getEnvVarWithCheck "TRUNK_BUILD_NUMBER"
+ext.targetEnv = getEnvVarWithCheck "TARGET_ENV"
+
+project.version = ext.majorVersion + "." + ext.minorVersion + "." +
+                  ext.incrementalVersion + "-" + ext.qualifier 
+
+// ------------- current time in America/Halifax
+Instant nowInstant = new Date().toInstant()
+ZoneId zoneId = ZoneId.of("America/Halifax")
+ZonedDateTime halifaxTime = ZonedDateTime.ofInstant(nowInstant, zoneId)
+DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MMM-dd kk:mm:ss a")
+String currentTime = halifaxTime.format(formatter)
+
+ext.buildTimeStamp = currentTime
+
+def DOCKER_HOST = "localhost" // "192.168.99.100"
+def ARTIFACTORY_BASE_URL = "http://${DOCKER_HOST}:8081/artifactory"
+
+if (ext.qualifier ==~ /RELEASE/) {
+    ext.REPOSITORY_URL = "${ARTIFACTORY_BASE_URL}/libs-release-local"
+} else {
+    ext.REPOSITORY_URL = "${ARTIFACTORY_BASE_URL}/libs-snapshot-local"
+}
+

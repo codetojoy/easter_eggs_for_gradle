@@ -1,0 +1,5 @@
+include 'app', 'common'
+
+def MY_PATH= '/Users/measter/src/github/codetojoy/easter_eggs_for_gradle/egg_StackOverflow_51649701'
+assert new File("$MY_PATH/random/path/common").exists()
+project(':common').projectDir = new File("$MY_PATH/random/path/common")

@@ -1,6 +1,6 @@
 
 task run() {
     doLast {
-        println "TRACER hello from path ${project.path}"
+        println "TRACER executing run for path ${project.path}"
     }
 }

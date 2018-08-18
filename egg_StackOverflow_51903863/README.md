@@ -7,4 +7,4 @@ Compare the output from the following:
 
 * `gradle run` 
 * `gradle :abc:run` 
-* `gradle :abc:run`
+* `gradle :def:run`

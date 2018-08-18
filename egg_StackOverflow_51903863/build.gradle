@@ -1,0 +1,21 @@
+
+task run() {
+    doLast {
+        println "TRACER hello from path: ${project.path}"
+    }
+}
+
+gradle.taskGraph.whenReady { graph ->
+    def hasRootRunTask = graph.hasTask(':run')
+
+    if (hasRootRunTask) {
+        graph.getAllTasks().each { task ->
+            // look for :abc:run, :def:run etc
+            def subRunTask = (task.path =~ /:.+:run/)
+            if (subRunTask) {
+                println "TRACER skipping ${task.path} because ':run' was specified"
+                task.enabled = false
+            }
+        }
+    }
+}

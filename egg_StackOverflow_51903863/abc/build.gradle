@@ -1,0 +1,6 @@
+
+task run() {
+    doLast {
+        println "TRACER hello from path ${project.path}"
+    }
+}

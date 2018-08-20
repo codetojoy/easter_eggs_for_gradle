@@ -1,0 +1,26 @@
+
+apply plugin: 'java'
+apply plugin: 'application'
+
+mainClassName = 'net.codetojoy.App'
+
+def targetPackage = 'net/codetojoy/util'
+def targetPackageJava = 'net.codetojoy.util'
+def buildTimeStamp = new Date().toString()
+
+compileJava { 
+    doFirst {
+        ant.mkdir(dir: "${projectDir}/src/main/java/${targetPackage}")
+        def newBuildInfoFile = new File("${projectDir}/src/main/java/${targetPackage}/BuildInfo.java")
+        def templateBuildInfoFile = new File("${projectDir}/templates/TemplateBuildInfo.java")
+
+        newBuildInfoFile.withWriter { def writer ->
+            templateBuildInfoFile.eachLine { def line ->
+                def newLine = line.replace("__PACKAGE", targetPackageJava)
+                                  .replace("__VERSION", project.appVersion)
+                                  .replace("__BUILD_TIMESTAMP", buildTimeStamp)
+                writer.write(newLine + "\n");
+            }
+        }
+    }
+}

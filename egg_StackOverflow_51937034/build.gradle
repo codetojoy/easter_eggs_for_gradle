@@ -6,6 +6,8 @@ mainClassName = 'net.codetojoy.App'
 
 def targetPackage = 'net/codetojoy/util'
 def targetPackageJava = 'net.codetojoy.util'
+
+def appVersion = project.appVersion // from gradle.properties
 def buildTimeStamp = new Date().toString()
 
 compileJava { 
@@ -17,7 +19,7 @@ compileJava {
         newBuildInfo.withWriter { def writer ->
             templateBuildInfo.eachLine { def line ->
                 def newLine = line.replace("__PACKAGE", targetPackageJava)
-                                  .replace("__VERSION", project.appVersion)
+                                  .replace("__VERSION", appVersion)
                                   .replace("__BUILD_TIMESTAMP", buildTimeStamp)
                 writer.write(newLine + "\n");
             }

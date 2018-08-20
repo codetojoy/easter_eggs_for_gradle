@@ -11,11 +11,11 @@ def buildTimeStamp = new Date().toString()
 compileJava { 
     doFirst {
         ant.mkdir(dir: "${projectDir}/src/main/java/${targetPackage}")
-        def newBuildInfoFile = new File("${projectDir}/src/main/java/${targetPackage}/BuildInfo.java")
-        def templateBuildInfoFile = new File("${projectDir}/templates/TemplateBuildInfo.java")
+        def newBuildInfo = new File("${projectDir}/src/main/java/${targetPackage}/BuildInfo.java")
+        def templateBuildInfo = new File("${projectDir}/templates/TemplateBuildInfo.java")
 
-        newBuildInfoFile.withWriter { def writer ->
-            templateBuildInfoFile.eachLine { def line ->
+        newBuildInfo.withWriter { def writer ->
+            templateBuildInfo.eachLine { def line ->
                 def newLine = line.replace("__PACKAGE", targetPackageJava)
                                   .replace("__VERSION", project.appVersion)
                                   .replace("__BUILD_TIMESTAMP", buildTimeStamp)

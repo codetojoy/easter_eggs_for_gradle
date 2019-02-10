@@ -1,0 +1,44 @@
+
+apply plugin: 'java'
+
+ext {
+    HOST = "localhost"
+    ARTIFACTORY_BASE_URL = "http://${HOST}:8081/artifactory"
+    RELEASE_REPO_URL = "${ARTIFACTORY_BASE_URL}/libs-release-local" 
+}
+
+repositories {
+    // use local Artifactory first
+    maven {
+        name "remoteArtifactory"
+        url RELEASE_REPO_URL
+
+        credentials {
+            username = artifactoryUsername
+            password = artifactoryPassword
+        }
+    }
+
+    // use Maven Central second  
+    mavenCentral()
+}
+
+dependencies {
+    // this is the jar published by ex2 to local Artifactory 
+    implementation 'ca.foo:common:1.0.0'
+
+    implementation 'org.apache.commons:commons-lang3:3.5'
+
+    testCompile 'junit:junit:4.12'
+}
+
+sourceSets {
+    main.java.srcDirs = ['.']
+    main.java.excludes = ['test/**']
+
+    test.java.srcDirs = ['test']
+}
+
+archivesBaseName = 'service'
+group = 'ca.foo'
+version = '1.0.0'

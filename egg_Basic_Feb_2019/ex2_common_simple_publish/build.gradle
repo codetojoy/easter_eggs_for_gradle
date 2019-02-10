@@ -1,0 +1,83 @@
+
+apply plugin: 'java'
+apply plugin: 'distribution'
+apply plugin: 'maven-publish'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation 'org.apache.commons:commons-lang3:3.5'
+
+    testCompile 'junit:junit:4.12'
+}
+
+sourceSets {
+    main.java.srcDirs = ['.']
+    main.java.excludes = ['test/**', 'resources/**']
+
+    test.java.srcDirs = ['test']
+}
+
+archivesBaseName = 'common'
+group = 'ca.foo'
+version = '1.0.0'
+
+// -------- generate timestamp info 
+
+// do during config phase:
+def newBuildInfoFile = new File("${projectDir}/ca/foo/BuildInfo.java")
+def templateBuildInfoFile = new File("${projectDir}/resources/TemplateBuildInfo.java")
+def buildTimeStamp = new Date().toString()
+def gitCommitInfo = "sh resources/git_info.sh".execute().text.trim()
+
+newBuildInfoFile.withWriter { def writer ->
+    templateBuildInfoFile.eachLine { def line ->
+        def newLine = line.replace("__PACKAGE", "ca.foo")
+                          .replace("__ARTIFACT", archivesBaseName)
+                          .replace("__VERSION", project.version)
+                          .replace("__BUILD_TIMESTAMP", buildTimeStamp)
+                          .replace("__GIT_COMMIT_INFO", gitCommitInfo)
+        writer.write(newLine + "\n");
+    }
+}
+
+// -------- publishing to Artifactory 
+
+ext {
+    ARTIFACTORY_BASE_URL = "http://localhost:8081/artifactory"
+    REPO_URL = "${ARTIFACTORY_BASE_URL}/libs-release-local" 
+}
+
+distributions {
+    main {
+        baseName = archivesBaseName
+
+        contents {
+            from libsDir
+        }
+    }
+}
+
+publishing {
+    publications {
+        codetotjoy(MavenPublication) {
+            from components.java 
+            artifactId 'common'
+        }
+    }
+
+    repositories {
+        maven {
+            name "remoteArtifactory"
+            url REPO_URL
+
+            credentials {
+                username = artifactoryUsername
+                password = artifactoryPassword
+            }
+        }
+    }
+}
+

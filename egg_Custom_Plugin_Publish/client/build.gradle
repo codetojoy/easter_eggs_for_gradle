@@ -11,7 +11,7 @@ buildscript {
     }
 
     dependencies {
-        classpath "net.codetojoy:codetojoy-plugin:1.0.0"
+        classpath "net.codetojoy:codetojoy-plugin:1.0.1"
     }
 }
 
@@ -25,4 +25,5 @@ buildscript {
 */
 
 apply plugin: 'net.codetojoy.greeting'
+apply plugin: 'java'
 

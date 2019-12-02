@@ -8,6 +8,7 @@ public class GreetingPlugin implements Plugin<Project> {
 
     @Override
     public void apply(Project project) {
-        println "TRACER hello from GreetingPlugin!"
+        def version = "v 1.0.1 DEC 2019"
+        println "TRACER ${version} hello from GreetingPlugin"
     }
 }

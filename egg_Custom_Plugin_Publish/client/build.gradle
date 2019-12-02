@@ -1,0 +1,28 @@
+
+buildscript {
+    repositories {
+        maven {
+            url = "http://localhost:8081/artifactory/libs-release-local"
+            credentials {
+                username = artifactoryUsername
+                password = artifactoryPassword
+            }
+        }
+    }
+
+    dependencies {
+        classpath "net.codetojoy:codetojoy-plugin:1.0.0"
+    }
+}
+
+/*
+buildscript {
+    dependencies {
+        // classpath files('../plugin/build/libs/plugin.jar')
+        classpath files('/Users/measter/tmp/01.12.2019/codetojoy-plugin-1.0.0.jar')
+    }
+}
+*/
+
+apply plugin: 'net.codetojoy.greeting'
+

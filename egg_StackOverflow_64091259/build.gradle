@@ -1,0 +1,25 @@
+
+task mytask {
+    doLast {
+        ant.zipfileset(id:"zipfileset1", src:"c_reporter/servlet/reporter.war") {
+            include(name:"WEB-INF/classes/**/*.class")
+            exclude(name:"WEB-INF/classes/**/*_jsp*.class")
+        }
+        ant.fileset(id:"fileset1", dir:"c_lib") {
+            include(name:"test*.jar")
+        }
+        ant.union(id:"resources.reports.lib") {
+            fileset(refid:"fileset1")
+            fileset(id:"fileset2", dir:"c_adaptors/lib") {
+                include(name:"com*.jar")
+            }
+            zipfileset(refid:"zipfileset1")
+        }
+
+        // use the union
+        ant.mkdir(dir:"dest")
+        ant.copy(todir:"dest") {
+            resources(refid:"resources.reports.lib")
+        }
+    }
+}    

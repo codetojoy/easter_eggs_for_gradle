@@ -1,0 +1,42 @@
+
+
+project.ext.zipFiles1 = 
+zipTree("${projectDir}/c_reporter/servlet/reporter.war").matching {
+    include 'WEB-INF/classes/**/*.class'
+    exclude 'WEB-INF/classes/**/*_jsp.class'
+}
+
+project.ext.files1 = 
+fileTree("${projectDir}/c_lib").matching {
+    include 'test*.jar'
+}
+
+project.ext.files2 = 
+fileTree("${projectDir}/c_adaptors/lib").matching {
+    include 'com*.jar'
+}
+
+project.ext.allFiles = 
+project.ext.zipFiles1.plus(project.ext.files1)
+                     .plus(project.ext.files2)
+
+task mytask {
+    doLast {
+        println " -------------- "
+        project.ext.zipFiles1.visit { def details -> 
+            println "TRACER path: " + details.file.path 
+        }
+        println " -------------- "
+        project.ext.files1.visit { def details -> 
+            println "TRACER path: " + details.file.path 
+        }
+        println " -------------- "
+        project.ext.files2.visit { def details -> 
+            println "TRACER path: " + details.file.path 
+        }
+        println " -------------- "
+        project.ext.allFiles.visit { def details -> 
+            println "TRACER path: " + details.file.path 
+        }
+    }
+}

@@ -1,0 +1,7 @@
+
+apply plugin: 'java'
+
+dependencies {
+    implementation project(":G_modding:jtta-core")
+}
+

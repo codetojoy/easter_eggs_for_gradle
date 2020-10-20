@@ -1,1 +1,1 @@
-include 'G_modding:jtta-primitive-lite', 'G_modding:jtta-core'
+include ':G_modding:jtta-primitive-lite', ':G_modding:jtta-core'

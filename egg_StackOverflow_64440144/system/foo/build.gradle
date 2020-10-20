@@ -1,0 +1,15 @@
+
+task fooGo {
+    description "desc for fooGo"
+}
+
+ext.browsers = ["firefox", "chrome", "safari"]
+
+ext.browsers.each { browser ->
+    tasks.create(name: "fooDownloadDriver_${browser}") {
+        description "desc for fooDownloadDriver_${browser}"
+        doLast {
+            println "TRACER hello from fooDownloadDriver_${browser}"
+        }
+    }
+}

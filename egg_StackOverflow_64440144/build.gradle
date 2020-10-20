@@ -1,0 +1,7 @@
+
+task rootGo {
+    description "go from root"
+    doLast {
+        println "TRACER rootGo complete"
+    }
+}

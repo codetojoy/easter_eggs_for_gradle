@@ -1,0 +1,7 @@
+
+apply plugin: 'java'
+
+task serverGo {
+    description "desc for serverGo"
+}
+

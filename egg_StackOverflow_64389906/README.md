@@ -1,5 +1,6 @@
 
 * example for [this question](https://stackoverflow.com/questions/64389906) on Stack Overflow
+* We note that the question states that each project/service is in its own repository, but this example doesn't prevent that.
 
 ### Usage Example
 

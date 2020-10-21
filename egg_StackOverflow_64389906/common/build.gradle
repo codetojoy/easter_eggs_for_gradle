@@ -1,0 +1,86 @@
+repositories {
+    mavenLocal()
+
+    /* Removed our internal repositories */
+
+    jcenter()
+    mavenCentral()
+}
+
+apply plugin: 'java'
+apply plugin: 'jacoco'
+apply plugin: 'maven-publish'
+apply plugin: 'io.spring.dependency-management'
+
+group = 'nedl-unified-platform'
+
+/* Required to publish Spring Boot microservices to publish to repository */
+configurations {
+    [apiElements, runtimeElements].each {
+        it.outgoing.artifacts.removeIf { it.buildDependencies.getDependencies(null).contains(jar) }
+        it.outgoing.artifact(bootJar)
+    }
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_11
+    targetCompatibility = JavaVersion.VERSION_11
+    // withJavadocJar()
+    // withSourcesJar()
+}
+
+ext {
+    set('springBootVersion', '2.1.17.RELEASE')
+    set('springCloudVersion', "Greenwich.SR6")
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+    }
+}
+
+jacoco {
+    toolVersion = "0.8.5"
+    reportsDir = file("$buildDir/reports/jacoco")
+}
+
+test {
+    finalizedBy jacocoTestReport // report is always generated after tests run
+}
+
+jacocoTestCoverageVerification {
+    violationRules {
+        rule {
+            limit {
+                minimum = 0.2
+            }
+        }
+    }
+}
+
+jacocoTestReport {
+    dependsOn test // tests are required to run before generating the report
+
+    reports {
+        xml.enabled true
+        html.destination file("${reportsDir}/jacocoHtml")
+        xml.destination file("${reportsDir}/jacocoReport.xml")
+    }
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            from components.java
+        }
+    }
+
+    repositories {
+        /* excluded for privacy and brevity's sake, our internal Maven repo */
+    }
+}

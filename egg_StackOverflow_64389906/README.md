@@ -5,6 +5,7 @@
 ### Usage Example
 
 * place `spring-boot.txt` onto appropriate web server (possibly CI/CD server)
+    - note that is a simple text file, but it could easily be a more formal JSON specification
 * edit `service1/build.gradle` and `service2/build.gradle` with appropriate URI
 * `cd service1`
     * `./run.sh`

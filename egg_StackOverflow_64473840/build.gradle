@@ -1,0 +1,36 @@
+
+apply plugin: 'java'
+
+/*
+Usage
+
+* edit jar list below
+* run: gradle clean getDeps
+* examine `runtime` dir
+*/
+
+dependencies {
+    implementation('com.amazonaws:aws-java-sdk-core:latest.release') {
+        transitive = false
+    }
+}
+
+repositories { 
+   jcenter()
+}
+
+clean {
+    doLast {
+        ant.delete(dir: 'runtime')
+    }
+}
+
+task getDeps(type: Copy) {
+    from sourceSets.main.runtimeClasspath
+    into 'runtime/'
+
+    doFirst {
+        ant.delete(dir: 'runtime')
+        ant.mkdir(dir: 'runtime')
+    }
+}

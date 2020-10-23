@@ -7,6 +7,7 @@
 
 * `sdk use java 8u131`
 * edit `build.gradle` so that compatibility flags are commented out 
+* `./build.sh`
 * `sdk use java 7.0.181-zulu`
 * `./run.sh`
     - this should fail, because it is built as JDK 8 
@@ -15,6 +16,7 @@
 
 * `sdk use java 8u131`
 * edit `build.gradle` so that compatibility flags are enabled
+* `./build.sh`
 * `sdk use java 7.0.181-zulu`
 * `./run.sh`
     - this should work, because it is built as JDK 1.7 

@@ -1,0 +1,32 @@
+apply plugin: 'java'
+repositories {
+    mavenCentral()
+    jcenter()
+    flatDir {
+      println 'in repositories'
+      dirs 'libs'
+    }
+}
+
+configurations.create('jasperreports')
+configurations.jasperreports {
+ transitive = true
+}
+dependencies {
+    jasperreports fileTree(dir: 'libs',include: '*.jar')
+ }
+
+task compileJasperJava {
+    def jasperSourceDir = file('src/main/jasperreports')
+    def jasperTargetDir = file('build/classes/main/jasperreports')
+    
+    ant {
+        taskdef(name: 'jrc', classname: 'net.sf.jasperreports.ant.JRAntCompileTask', classpath: configurations.jasperreports.asPath)
+        jasperTargetDir.mkdirs()
+        jrc(srcdir: jasperSourceDir, destdir:jasperTargetDir) {
+            include(name:'**/*.jrxml')
+        }
+    }
+}
+
+classes.dependsOn compileJasperJava

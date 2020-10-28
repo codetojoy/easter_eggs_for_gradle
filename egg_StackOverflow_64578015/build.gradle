@@ -1,0 +1,60 @@
+
+apply plugin: 'java'
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+}
+
+archivesBaseName = 'example'
+def thisArtifactId  = 'example'
+group = 'net.codetojoy'
+version = "1.0.0"
+
+def getContextPath = { ->
+    def result = "default"
+
+    if (project.Environment == "prod") {
+        result = "PROD context path here"
+    } else if (project.Environment == "uat") {
+        result = "UAT context path here"
+    } else if (project.Environment == "dev") {
+        result = "DEV context path here"
+    }
+
+    return result
+}
+
+def getAppPropertiesPath = { ->
+    def result = "default"
+
+    if (project.Environment == "prod") {
+        result = "PROD app properties path here"
+    } else if (project.Environment == "uat") {
+        result = "UAT app properties path here"
+    } else if (project.Environment == "dev") {
+        result = "DEV app properties path here"
+    }
+
+    return result
+}
+
+compileJava.doFirst {
+    ant.mkdir(dir: "${projectDir}/src/main/java/net/codetojoy/util")
+
+    def newBuildInfoFile = new File("${projectDir}/src/main/java/net/codetojoy/util/Constants.java")
+    def templateBuildInfoFile = new File("${projectDir}/resources/TemplateConstants.java")
+
+    newBuildInfoFile.withWriter { def writer ->
+        templateBuildInfoFile.eachLine { def line ->
+            def newLine = line.replace("__PACKAGE", "net.codetojoy.util")
+                              .replace("__CONTEXT_PATH", getContextPath())
+                              .replace("__APP_PROPERTIES_PATH", getAppPropertiesPath())
+                              .replace("__VERSION",project.version)
+                              .replace("__BUILD_TIMESTAMP", new Date().toString())
+            writer.write(newLine + "\n");
+        }
+    }
+}

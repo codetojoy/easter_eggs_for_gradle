@@ -1,1 +1,4 @@
-public class Example {}
+public 
+class 
+Example {
+}

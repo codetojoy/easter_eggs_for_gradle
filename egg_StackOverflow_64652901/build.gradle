@@ -25,6 +25,12 @@ dependencies {
 }
 
 task fmt(type: GoogleJavaFormat) {
+    doFirst {
+        println "TRACER before formatting"
+    }
+    doLast {
+        println "TRACER after formatting"
+    }
 }
 
 task vfmt(type: VerifyGoogleJavaFormat) {

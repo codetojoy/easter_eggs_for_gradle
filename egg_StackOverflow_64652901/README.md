@@ -7,3 +7,6 @@
     - displays `Example.java`
     - runs Gradle task
     - displays formatted `Example.java`
+* tested with
+    - JDK: openjdk 11-ea 2018-09-25
+    - Gradle 6.7

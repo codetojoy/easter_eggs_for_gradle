@@ -2,6 +2,7 @@
 
 set -e
 
+mkdir -p src/main/java
 cp ./Original.txt src/main/java/Example.java
 
 echo "-------------------------------"

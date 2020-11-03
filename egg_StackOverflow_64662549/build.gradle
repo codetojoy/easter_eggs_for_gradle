@@ -1,0 +1,44 @@
+plugins {
+	id 'org.springframework.boot' version '2.3.5.RELEASE'
+	id 'io.spring.dependency-management' version '1.0.10.RELEASE'
+	id 'java'
+	id 'war'
+}
+
+group = 'net.codetojoy'
+version = '0.0.1-SNAPSHOT'
+sourceCompatibility = '11'
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter-web'
+	providedRuntime 'org.springframework.boot:spring-boot-starter-tomcat'
+	testImplementation('org.springframework.boot:spring-boot-starter-test') {
+		exclude group: 'org.junit.vintage', module: 'junit-vintage-engine'
+	}
+}
+
+build.doFirst {
+    def appPropsFilename = "${projectDir}/src/main/resources/application.properties"
+    ant.delete(file: appPropsFilename)
+    def appProps = new File(appPropsFilename)
+    def templateAppProps = new File("${projectDir}/src/main/resources/template.application.properties")
+
+    // NOTE: these tokens are just examples. They can be named whatever you like, 
+    //       and the values can originate from wherever is convenient for your needs.
+ 
+    appProps.withWriter { def writer ->
+        templateAppProps.eachLine { def line ->
+            def newLine = line.replace("__SERVER_PORT", "6161") 
+                              .replace("__SPRING_DATASOURCE_URL", "http://example.com/db")
+            writer.write(newLine + "\n");
+        }
+    }
+}
+
+test {
+	useJUnitPlatform()
+}

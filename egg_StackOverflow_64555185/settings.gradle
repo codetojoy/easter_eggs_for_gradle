@@ -1,0 +1,6 @@
+
+rootProject.name = 'mainApp'
+
+include 'core-module'
+include 'lib-module'
+include 'lib-another-module'

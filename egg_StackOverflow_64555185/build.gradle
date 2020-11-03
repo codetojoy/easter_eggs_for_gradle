@@ -1,0 +1,5 @@
+
+subprojects {
+    apply plugin: 'java-library'
+    apply from: "${rootProject.projectDir}/helpers/helper-tasks.gradle"
+}

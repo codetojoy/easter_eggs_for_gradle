@@ -1,0 +1,12 @@
+
+task('bundleJar', type: Jar) {
+    manifest {
+        attributes 'Manifest-Version': "1.0"
+        attributes 'Built-By': USER_NAME
+        attributes 'Created-By': "Java Version: " + JAVA_VERSION
+        attributes 'Implementation-Version': BUNDLE_VERSION + " Build " + GIT_COMMIT_HASH
+        attributes 'Build-Timestamp': BUILD_TIME
+    }
+    baseName("${project.name}") 
+    from project.sourceSets.main.output.classesDirs
+}

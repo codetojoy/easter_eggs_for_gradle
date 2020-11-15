@@ -39,22 +39,14 @@ fun generateVersion() {
     val inputStream: InputStream = File(sourcePath).inputStream()
     val inputLines = mutableListOf<String>()
 
-    val outputLines = mutableListOf<String>()
-
     inputStream.bufferedReader().forEachLine { inputLines.add(it) } 
 
-    inputLines.forEach { origLine ->
-        val newLine = origLine.replace("__VERSION", version)
-        outputLines.add(newLine)
-    }
-
     File(destPath).printWriter().use { out -> 
-        outputLines.forEach { line ->
-            out.println(line) 
+        inputLines.forEach { origLine ->
+            val newLine = origLine.replace("__VERSION", version)
+            out.println(newLine) 
         }
     }
 
     inputStream.close()
-
-    System.out.println("Ready.")
 }

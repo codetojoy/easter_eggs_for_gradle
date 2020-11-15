@@ -22,9 +22,8 @@ dependencies {
 }
 
 build.doFirst {
-    def appPropsFilename = "${projectDir}/src/main/resources/application.properties"
-    ant.delete(file: appPropsFilename)
-    def appProps = new File(appPropsFilename)
+    def appProps= new File("${projectDir}/src/main/resources/application.properties")
+    ant.delete(file: appProps.name)
     def templateAppProps = new File("${projectDir}/src/main/resources/template.application.properties")
 
     // NOTE: these tokens are just examples. They can be named whatever you like, 
@@ -32,8 +31,9 @@ build.doFirst {
  
     appProps.withWriter { def writer ->
         templateAppProps.eachLine { def line ->
-            def newLine = line.replace("__SERVER_PORT", "6161") 
+            def newLine = line.replace("__SERVER_PORT", "4444") 
                               .replace("__SPRING_DATASOURCE_URL", "http://example.com/db")
+                              .replace("__BUILD_TIMESTAMP", new Date().toString())
             writer.write(newLine + "\n");
         }
     }

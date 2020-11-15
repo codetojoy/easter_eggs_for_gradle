@@ -37,13 +37,10 @@ fun generateVersion() {
     val destPath = rootDir.absolutePath + "/src/main/kotlin/net/codetojoy/Version.kt"
 
     val inputStream: InputStream = File(sourcePath).inputStream()
-    val inputLines = mutableListOf<String>()
-
-    inputStream.bufferedReader().forEachLine { inputLines.add(it) } 
 
     File(destPath).printWriter().use { out -> 
-        inputLines.forEach { origLine ->
-            val newLine = origLine.replace("__VERSION", version)
+        inputStream.bufferedReader().forEachLine { inputLine ->
+            val newLine = inputLine.replace("__VERSION", version)
             out.println(newLine) 
         }
     }

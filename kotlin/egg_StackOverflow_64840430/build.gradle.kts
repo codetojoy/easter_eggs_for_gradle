@@ -31,10 +31,10 @@ tasks.named("compileKotlin") {
 
 fun generateVersion() {
     val version: String by project
-    val rootDir: String by project
+    val rootDir: File by project
 
-    val sourcePath = rootDir + "/resources/TemplateVersion.kt"
-    val destPath = rootDir + "/src/main/kotlin/net/codetojoy/Version.kt"
+    val sourcePath = rootDir.absolutePath + "/resources/TemplateVersion.kt"
+    val destPath = rootDir.absolutePath + "/src/main/kotlin/net/codetojoy/Version.kt"
 
     val inputStream: InputStream = File(sourcePath).inputStream()
     val inputLines = mutableListOf<String>()

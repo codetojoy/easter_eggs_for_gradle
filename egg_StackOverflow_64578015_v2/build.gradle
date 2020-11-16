@@ -1,0 +1,69 @@
+
+apply plugin: 'java'
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+}
+
+archivesBaseName = 'example'
+def thisArtifactId  = 'example'
+group = 'net.codetojoy'
+version = "1.0.0"
+
+def getContextPath = { ->
+    def result = "default"
+
+    if (project.Environment == "prod") {
+        result = "PROD context path here"
+    } else if (project.Environment == "uat") {
+        result = "UAT context path here"
+    } else if (project.Environment == "dev") {
+        result = "DEV context path here"
+    }
+
+    return result
+}
+
+def getAppPropertiesPath = { ->
+    def result = "default"
+
+    if (project.Environment == "prod") {
+        result = "PROD app properties path here"
+    } else if (project.Environment == "uat") {
+        result = "UAT app properties path here"
+    } else if (project.Environment == "dev") {
+        result = "DEV app properties path here"
+    }
+
+    return result
+}
+
+def templateConstantsFile = new File("${projectDir}/resources/TemplateConstants.java")
+def targetPackage = "net/codetojoy/util"
+def targetJavaPackage = targetPackage.replaceAll(/\//, /\./)
+def newConstantsFile = new File("${projectDir}/src/main/java/${targetPackage}/Constants.java")
+
+task generateConstants() {
+    inputs.file templateConstantsFile
+    outputs.file newConstantsFile
+
+    doLast {
+        ant.mkdir(dir: "${projectDir}/src/main/java/${targetPackage}") 
+
+        newConstantsFile.withWriter { def writer ->
+            templateConstantsFile.eachLine { def line ->
+                def newLine = line.replace("__PACKAGE", targetJavaPackage)
+                                  .replace("__CONTEXT_PATH", getContextPath())
+                                  .replace("__APP_PROPERTIES_PATH", getAppPropertiesPath())
+                                  .replace("__VERSION",project.version)
+                                  .replace("__BUILD_TIMESTAMP", new Date().toString())
+                writer.write(newLine + "\n");
+            }
+        }
+    }
+}
+
+compileJava.dependsOn generateConstants 

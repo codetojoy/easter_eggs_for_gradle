@@ -19,26 +19,38 @@ dependencies {
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit") 
 }
 
+val targetPackage = "net/codetojoy"
+val targetJavaPackage = "net.codetojoy"
+
 application {
-    mainClass.set("net.codetojoy.AppKt") 
+    mainClass.set("${targetJavaPackage}.AppKt") 
 }
 
-tasks.named("compileKotlin") {
+val sourceFile = File(rootDir.absolutePath + "/resources/TemplateVersion.kt")
+val propFile = File(rootDir.absolutePath + "/gradle.properties")
+val destFile = File(rootDir.absolutePath + "/src/main/kotlin/${targetPackage}/Version.kt")
+
+tasks.register("generateVersion") {
+    inputs.file(sourceFile)
+    inputs.file(propFile)
+    outputs.file(destFile)
+
     doFirst {
         generateVersion()
     }
+}
+
+tasks.named("compileKotlin") {
+    dependsOn("generateVersion") 
 }
 
 fun generateVersion() {
     val version: String by project
     val rootDir: File by project
 
-    val sourcePath = rootDir.absolutePath + "/resources/TemplateVersion.kt"
-    val destPath = rootDir.absolutePath + "/src/main/kotlin/net/codetojoy/Version.kt"
+    val inputStream: InputStream = sourceFile.inputStream()
 
-    val inputStream: InputStream = File(sourcePath).inputStream()
-
-    File(destPath).printWriter().use { out -> 
+    destFile.printWriter().use { out -> 
         inputStream.bufferedReader().forEachLine { inputLine ->
             val newLine = inputLine.replace("__VERSION", version)
             out.println(newLine) 

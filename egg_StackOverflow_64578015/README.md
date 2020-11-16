@@ -2,6 +2,7 @@
 ### Summary
 
 * example for [this question](https://stackoverflow.com/questions/64578015) on Stack Overflow
+* see [this egg](https://github.com/codetojoy/easter_eggs_for_gradle/tree/master/egg_StackOverflow_64578015_v2) for a more elegant version of `build.gradle`
 
 ### Usage
 

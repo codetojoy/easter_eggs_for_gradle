@@ -15,12 +15,11 @@ def getFileList() {
 //      obj.relativeDir = "./data/abc"
 //      obj.filename = "abc1.txt"
 def getFileInfo(path) {
-    def regex = /(.*)\/(.*)/
-    def matcher = path =~ regex
-    assert matcher.matches()
+    def file = new File(path)
+    assert file.exists()
     def info = new Expando()
-    info.relativeDir = matcher[0][1]
-    info.filename = matcher[0][2]
+    info.relativeDir = file.parentFile.path
+    info.filename = file.name
     return info
 }
 

@@ -29,12 +29,10 @@ def getFileInfo(path) {
     def regex = /(.*)\/(.*)/
     def matcher = path =~ regex
     assert matcher.matches()
-    def relativeDir = matcher[0][1]
-    def filename = matcher[0][2]
-    def result = new Expando()
-    result.relativeDir = relativeDir
-    result.filename = filename
-    return result
+    def info = new Expando()
+    info.relativeDir = matcher[0][1]
+    info.filename = matcher[0][2]
+    return info
 }
 
 task sourceDrop(type: Zip) {

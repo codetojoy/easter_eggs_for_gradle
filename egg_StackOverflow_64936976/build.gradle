@@ -10,14 +10,6 @@ def getFileList() {
     return list
 }
 
-// input:   ["./data/abc/abc1.txt", "./data/abc/abc2.txt"]
-// returns: map["./data/abc"] = ["abc1.txt", "abc2.txt"]
-def getFileMap(def list) {
-    def map = [:].withDefault{key -> []}
-    list.collect { getFileInfo(it) }.each { map[it.relativeDir] << it.filename } 
-    return map
-}
-
 // input: "./data/abc/abc1.txt"
 // returns: object such that:
 //      obj.relativeDir = "./data/abc"
@@ -34,17 +26,16 @@ def getFileInfo(path) {
 
 task sourceDrop(type: Zip) {
     def filelist = getFileList() 
-    def fileMap = getFileMap(fileList) 
  
     baseName = "sourceDrop"
     version = "1.0"
-    fileMap.each { relativeDir, files ->
-        files.each { file ->
-            from(relativeDir) {
-                include file into relativeDir
-            }
+    
+    fileList.each { file ->
+        def info = getFileInfo(file)
+        from (info.relativeDir) {
+            include info.filename into info.relativeDir
         }
-    } 
+    }
 
     destinationDir = new File(rootProject.projectDir, "")
 }

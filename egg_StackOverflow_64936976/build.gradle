@@ -1,0 +1,55 @@
+
+def getFileList() {
+    def list = []
+    list << "./data/abc/abc1.txt"
+    list << "./data/abc/abc2.txt"
+    list << "./data/def/def1.txt"
+    list << "./data/def/def2.txt"
+    list << "./data/ijk/ijk1.txt"
+    list << "./data/ijk/ijk2.txt"
+    return list
+}
+
+// input:   ["./data/abc/abc1.txt", "./data/abc/abc2.txt"]
+// returns: map["./data/abc"] = ["abc1.txt", "abc2.txt"]
+def getFileMap(def list) {
+    def map = [:].withDefault{key -> []}
+    list.each { file ->
+        def info = getFileInfo(file)
+        map[info.relativeDir] << info.filename 
+    } 
+    return map
+}
+
+// input: "./data/abc/abc1.txt"
+// returns: object such that:
+//      obj.relativeDir = "./data/abc"
+//      obj.filename = "abc1.txt"
+def getFileInfo(path) {
+    def regex = /(.*)\/(.*)/
+    def matcher = path =~ regex
+    assert matcher.matches()
+    def relativeDir = matcher[0][1]
+    def filename = matcher[0][2]
+    def result = new Expando()
+    result.relativeDir = relativeDir
+    result.filename = filename
+    return result
+}
+
+task sourceDrop(type: Zip) {
+    def filelist = getFileList() 
+    def fileMap = getFileMap(fileList) 
+ 
+    baseName = "sourceDrop"
+    version = "1.0"
+    fileMap.each { relativeDir, files ->
+        files.each { file ->
+            from(relativeDir) {
+                include file into relativeDir
+            }
+        }
+    } 
+
+    destinationDir = new File(rootProject.projectDir, "")
+}

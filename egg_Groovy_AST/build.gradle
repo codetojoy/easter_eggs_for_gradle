@@ -1,0 +1,15 @@
+apply plugin: 'application'
+apply plugin: 'groovy'
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+    implementation 'org.codehaus.groovy:groovy-all:2.5.13'
+    implementation project(':ast')
+
+    testImplementation 'org.spockframework:spock-core:1.2-groovy-2.5'
+}
+
+mainClassName = 'net.codetojoy.Runner'

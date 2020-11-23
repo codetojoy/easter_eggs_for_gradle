@@ -1,0 +1,20 @@
+
+project.ext.srcDirName = 'src'
+project.ext.propDirName = 'props'
+
+project.ext.srcDir = "${projectDir}/${srcDirName}"
+project.ext.propBaseDir = "${projectDir}/base"
+project.ext.propDir = "${propBaseDir}/${propDirName}"
+
+task deployAsJar(type: Jar) {
+    from (srcDir) {
+        include "**/*" into srcDirName
+    }
+    from (propDir) {
+        include "**/*" into "${srcDirName}/${propDirName}"
+    }
+
+    archiveFileName = "examples.jar"
+    destinationDirectory = file(".")
+}
+

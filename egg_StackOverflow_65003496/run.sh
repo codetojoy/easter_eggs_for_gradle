@@ -9,6 +9,6 @@ echo "hello" > ./myDir/pars.class
 
 rm -f ./anotherDir/*.class
 
-gradle cU
+gradle copyUtil
 
 ls -lrt ./anotherDir

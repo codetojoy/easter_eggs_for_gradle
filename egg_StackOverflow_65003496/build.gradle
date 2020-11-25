@@ -1,0 +1,17 @@
+        
+/*
+def list = []
+MY_VAR.split(",").each { token ->
+    list << token.trim()
+}
+
+// def list = ['Util.class', 'abcd.class']
+*/
+
+    task('copyUtil', type: Copy) {
+        from "myDir"
+        // include "${MY_VAR}"
+        // include list
+        include MY_VAR.split(",").collect{ it.trim() }
+        into "anotherDir"
+    }

@@ -2,12 +2,16 @@
 
 set -e
 
-mkdir -p myDir anotherDir
-echo "hello" > ./myDir/Util.class
-echo "hello" > ./myDir/abcd.class
-echo "hello" > ./myDir/pars.class
+rm -rf myDir anotherDir 
 
-rm -f ./anotherDir/*.class
+mkdir -p myDir/util myDir/abcd myDir/parsing_jars
+mkdir -p anotherDir
+
+echo "hello" > ./myDir/util/Util.jar
+echo "hello" > ./myDir/abcd/abcd.jar
+echo "hello" > ./myDir/parsing_jars/pars.jar
+
+rm -f ./anotherDir/*.jar
 
 gradle copyUtil
 

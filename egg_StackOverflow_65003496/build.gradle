@@ -1,17 +1,8 @@
         
-/*
-def list = []
-MY_VAR.split(",").each { token ->
-    list << token.trim()
+task('copyUtil', type: Copy) {
+    // ["**/Util.jar", "**/abcd.jar", ...]
+    def matchStr = MY_VAR.split(",").collect{"**/" + it.trim()}
+
+    from fileTree(".").include(matchStr).files
+    into "anotherDir"
 }
-
-// def list = ['Util.class', 'abcd.class']
-*/
-
-    task('copyUtil', type: Copy) {
-        from "myDir"
-        // include "${MY_VAR}"
-        // include list
-        include MY_VAR.split(",").collect{ it.trim() }
-        into "anotherDir"
-    }

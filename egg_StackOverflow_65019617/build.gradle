@@ -1,0 +1,54 @@
+plugins {
+    id 'java-library'
+    id 'application'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    api 'org.apache.commons:commons-math3:3.6.1'
+    
+    implementation 'org.glassfish.jersey.containers:jersey-container-servlet:2.14'
+
+    implementation 'com.netflix.governator:governator:1.17.10'
+
+    implementation 'com.netflix.karyon:karyon2-governator:2.7.1'
+    implementation 'com.netflix.karyon:karyon2-admin-web:2.7.1'
+    implementation 'com.netflix.karyon:karyon2-jersey-blocking:2.7.1'
+    implementation 'com.netflix.karyon:karyon2-archaius:2.7.1'
+    implementation 'com.netflix.karyon:karyon2-admin-web:2.7.1'
+    implementation 'com.netflix.karyon:karyon2-admin:2.7.1'
+
+    implementation 'io.netty:netty-all:4.0.22.Final'
+    
+    implementation 'com.google.guava:guava:28.0-jre'
+
+    // Use JUnit test framework
+    testImplementation 'junit:junit:4.12'
+}
+
+ext {
+   //javaMainClass = "TestGradle.Library"
+}
+
+task runWithJavaExec(type: JavaExec) {
+    /*group = "Execution"
+    description = "Run the main class with JavaExecTask"
+    classpath = sourceSets.main.runtimeClasspath
+    main = javaMainClass*/
+    group = "Execution"
+    description = "Run Sample Ping Pong Application"
+
+    main = "netflix.karyon.KaryonRunner"
+    print  sourceSets.main.runtimeClasspath
+    classpath = sourceSets.main.runtimeClasspath
+
+    jvmArgs "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005"
+    systemProperty 'java.awt.headless', 'true'
+    systemProperty 'archaius.deployment.environment', 'dev'
+
+    args = ["TestGradle.BootstrapInjectionModule"]
+}
+

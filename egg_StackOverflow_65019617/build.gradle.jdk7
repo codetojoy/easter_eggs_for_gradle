@@ -1,0 +1,54 @@
+plugins {
+    // Apply the java-library plugin to add support for Java Library
+    id 'java-library'
+    id 'application'
+}
+
+repositories {
+    // Use jcenter for resolving dependencies.
+    // You can declare any Maven/Ivy/file repository here.
+    mavenCentral()
+}
+
+dependencies {
+    // This dependency is exported to consumers, that is to say found on their compile classpath.
+    api 'org.apache.commons:commons-math3:3.6.1'
+    
+    // https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core
+    //compile group: 'com.fasterxml.jackson.core', name: 'jackson-core', version: '2.10.2'
+    // https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind
+    //compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.10.2'
+    
+    compile group: 'com.netflix.karyon', name: 'karyon2-admin-web', version: '2.7.1'
+    compile group: 'com.netflix.karyon', name: 'karyon2-jersey-blocking', version:'2.7.1'
+    compile group: 'com.netflix.karyon', name: 'karyon2-archaius', version: '2.7.1'
+    
+    implementation 'com.google.guava:guava:28.0-jre'
+
+    // Use JUnit test framework
+    testImplementation 'junit:junit:4.12'
+}
+
+ext {
+   //javaMainClass = "TestGradle.Library"
+}
+
+task runWithJavaExec(type: JavaExec) {
+    /*group = "Execution"
+    description = "Run the main class with JavaExecTask"
+    classpath = sourceSets.main.runtimeClasspath
+    main = javaMainClass*/
+    group = "Execution"
+    description = "Run Sample Ping Pong Application"
+
+    main = "netflix.karyon.KaryonRunner"
+    print  sourceSets.main.runtimeClasspath
+    classpath = sourceSets.main.runtimeClasspath
+
+    jvmArgs "-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=5005"
+    systemProperty 'java.awt.headless', 'true'
+    systemProperty 'archaius.deployment.environment', 'dev'
+
+    args = ["TestGradle.BootstrapInjectionModule"]
+}
+

@@ -1,0 +1,7 @@
+
+apply plugin: 'java-library'
+
+jar {
+    archiveBaseName = 'myproject'
+    archiveVersion = '5.1.50'
+}

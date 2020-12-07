@@ -1,0 +1,47 @@
+
+apply plugin: 'java'
+
+repositories {
+    jcenter()
+}
+
+dependencies {
+    testCompile 'junit:junit:4.12'
+}
+
+sourceSets {
+    // Configuring SourceSets for all connector source files.
+    main {
+        java {
+            srcDirs = ['src']
+        }
+    }
+    test {
+        // integrationTests
+        java {
+            srcDirs = ['test/integration']
+        }
+    }
+    unitTests {
+        //unitTests
+        compileClasspath += sourceSets.main.output + configurations.testCompile
+        runtimeClasspath += output + compileClasspath + configurations.testRuntime
+        java {
+            srcDirs = ['test/unit']
+        }
+    }
+}
+
+task('unitTest', type: Test) {
+    // unitTests
+    testClassesDirs = sourceSets.unitTests.output.classesDirs
+    classpath = sourceSets.unitTests.runtimeClasspath
+}
+
+project.gradle.startParameter.taskNames.each { taskName ->
+    if (taskName == 'build') {
+        test.enabled = false
+        check.dependsOn unitTest
+    }
+}
+

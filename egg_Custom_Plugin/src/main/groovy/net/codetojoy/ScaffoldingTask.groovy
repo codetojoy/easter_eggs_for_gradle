@@ -25,6 +25,7 @@ class ScaffoldingTask extends DefaultTask {
         project.file(destination)
     }
 
+    @Input
     def getTargetPackageDir() {
         targetPackage.replaceAll(/\./, File.separator)
     }

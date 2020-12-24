@@ -56,12 +56,12 @@ javaGradleContent = """
 apply plugin: 'java'
 
 repositories {
-    mavenCentral()
+    jcenter()
 }
 
 dependencies {
-    testCompile group: 'junit', name: 'junit', version: '4.12'
-    testCompile group: 'org.mockito', name: 'mockito-all', version: '1.10.19'
+    testImplementation group: 'junit', name: 'junit', version: '4.12'
+    testImplementation group: 'org.mockito', name: 'mockito-all', version: '1.10.19'
 }
 """
 
@@ -101,14 +101,14 @@ groovyGradleContent = """
 apply plugin: 'groovy'
 
 repositories {
-    mavenCentral()
+    jcenter()
 }
 
 dependencies {
-    compile group: 'org.codehaus.groovy', name: 'groovy-all', version: '2.4.5'
+    implementation group: 'org.codehaus.groovy', name: 'groovy-all', version: '2.4.5'
 
-    testCompile group: 'junit', name: 'junit', version: '4.12'
-    testCompile group: 'org.mockito', name: 'mockito-all', version: '1.10.19'
+    testImplementation group: 'junit', name: 'junit', version: '4.12'
+    testImplementation group: 'org.mockito', name: 'mockito-all', version: '1.10.19'
 }
 """
     }

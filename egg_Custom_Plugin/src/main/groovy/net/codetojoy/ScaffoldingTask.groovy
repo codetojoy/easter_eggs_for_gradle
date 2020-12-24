@@ -5,7 +5,7 @@ import net.codetojoy.generator.*
 import net.codetojoy.util.*
 
 import org.gradle.api.*
-import org.gradle.api.tasks.TaskAction
+import org.gradle.api.tasks.*
 
 class ScaffoldingTask extends DefaultTask {
 
@@ -13,14 +13,17 @@ class ScaffoldingTask extends DefaultTask {
     def projectType 
     def targetPackage
 
+    @Input
     def getProjectType() {
         return new ProjectTypes().getType(projectType)
     }
 
+    @Input
     def getDestination() {
         project.file(destination)
     }
 
+    @Input
     def getTargetPackageDir() {
         targetPackage.replaceAll(/\./, File.separator)
     }

@@ -6,7 +6,7 @@ buildscript {
 
 apply plugin: 'net.codetojoy.scaffolding'
 
-def destDir = "/Users/measter/tmp/20.aug.groovy"
+def destDir = "example_project"
 ant.mkdir(dir: destDir)
 
 scaffolding {

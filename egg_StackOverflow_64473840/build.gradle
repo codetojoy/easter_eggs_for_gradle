@@ -16,7 +16,7 @@ dependencies {
 }
 
 repositories { 
-   jcenter()
+   mavenCentral()
 }
 
 clean {

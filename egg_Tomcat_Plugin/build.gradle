@@ -3,6 +3,8 @@
 
 buildscript {
     repositories {
+        // JCENTER SUNSET
+        // FEB 2021: not sure if this plugin is published to Maven Central ?
         jcenter()
     }
 

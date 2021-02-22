@@ -19,7 +19,7 @@ repositories {
         }
     }
 
-    jcenter()
+    mavenCentral()
 }
 
 dependencies {}

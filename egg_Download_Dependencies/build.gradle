@@ -10,10 +10,9 @@ Usage
 */
 
 dependencies {
-    compile 'org.apache.httpcomponents:httpclient:4.2.5'
-    compile 'org.apache.httpcomponents:httpclient-cache:4.2.5'
-    compile 'org.apache.httpcomponents:httpcore:4.2.4'
-    compile 'org.apache.httpcomponents:httpmime:4.2.5'
+    implementation("io.micronaut:micronaut-http-client:3.2.0")
+    implementation("io.micronaut:micronaut-runtime:3.2.0")
+    implementation("io.micronaut:micronaut-validation:3.2.0")
 }
 
 repositories { 

@@ -29,5 +29,5 @@ jobs:
     
       - name: Execute Gradle run
         run: ./gradlew run 
-        working-directory: egg_Gradle_JDK19_preview
+        working-directory: egg_JDK19_Preview
 

@@ -1,0 +1,18 @@
+
+apply plugin: 'java'
+apply plugin: 'application'
+
+mainClassName = "net.codetojoy.Runner"
+
+compileJava {
+    options.compilerArgs.addAll(['--release', '19']) 
+    options.compilerArgs.addAll(['--enable-preview'])
+    options.compilerArgs.addAll(['--add-modules', 'jdk.incubator.concurrent'])
+}
+
+application {
+    // applicationDefaultJvmArgs = ['-Dgreeting.language=en']
+
+    applicationDefaultJvmArgs = ['--enable-preview', 
+                                 '--add-modules', 'jdk.incubator.concurrent']
+}

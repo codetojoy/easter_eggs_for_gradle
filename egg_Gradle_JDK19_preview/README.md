@@ -17,7 +17,7 @@ Build Notes:
 * requires JDK 19
 * requires modern version of Gradle (uses wrapper to obtain appropriate version)
 * tested with [this version](./Gradle.version.md) of Gradle 
-* see also [this Github Action](../.github/workflows/build_egg_StackOverflow_03_NOV.yml)
+* see also [this Github Action](../.github/workflows/run_egg_Gradle_JDK19_preview.yml)
 
 To Build:
 ---------

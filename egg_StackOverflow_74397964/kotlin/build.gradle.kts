@@ -26,7 +26,7 @@ tasks.withType<Test>().configureEach {
 
     jvmArgs("--enable-preview", "--add-modules", "jdk.incubator.concurrent")
 
-	testLogging {
-		events("passed", "skipped", "failed")
-	}
+    testLogging {
+        events("passed", "skipped", "failed")
+    }
 }

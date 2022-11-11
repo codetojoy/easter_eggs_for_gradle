@@ -5,19 +5,14 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
 
-/*
-import java.util.*;
-import java.util.concurrent.*;
-import java.util.concurrent.atomic.*;
-*/
-import jdk.incubator.concurrent.*;
+import jdk.incubator.concurrent.StructuredTaskScope;
 
 class CustomStructuredTaskScope<T> extends StructuredTaskScope<T> {
 }
 
 public class TestScope {
 	@Test
-	void addsTwoNumbers() {
+	void canaryTestForScope() {
         // test 
 		var x = 4 + 4;
 

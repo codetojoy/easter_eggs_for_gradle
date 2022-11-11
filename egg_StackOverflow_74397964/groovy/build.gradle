@@ -1,9 +1,5 @@
 
-
 apply plugin: 'java'
-apply plugin: 'application'
-
-mainClassName = "net.codetojoy.Runner"
 
 repositories {
     mavenCentral()
@@ -35,9 +31,3 @@ test {
 		events "passed", "skipped", "failed"
 	}
 }
-
-application {
-    applicationDefaultJvmArgs = ['--enable-preview', 
-                                 '--add-modules', 'jdk.incubator.concurrent']
-}
-

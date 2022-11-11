@@ -11,11 +11,11 @@ class CustomStructuredTaskScope<T> extends StructuredTaskScope<T> {
 }
 
 public class TestScope {
-	@Test
-	void canaryTestForScope() {
+    @Test
+    void canaryTestForScope() {
         // test 
-		var x = 4 + 4;
+        var x = 4 + 4;
 
-		assertEquals(8, x);
-	}
+        assertEquals(8, x);
+    }
 }

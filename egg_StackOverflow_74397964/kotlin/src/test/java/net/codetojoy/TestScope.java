@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
 
-import jdk.incubator.concurrent.*;
+import jdk.incubator.concurrent.StructuredTaskScope;
 
 class CustomStructuredTaskScope<T> extends StructuredTaskScope<T> {
 }

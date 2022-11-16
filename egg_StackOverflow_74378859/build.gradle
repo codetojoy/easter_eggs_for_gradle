@@ -15,8 +15,6 @@ checkstyle {
 
 abstract class AntReportSummaryTask extends Exec {
     AntReportSummaryTask() {
-        workingDir project.projectDir 
-
         standardOutput = new ByteArrayOutputStream()
 
         ext.output = {

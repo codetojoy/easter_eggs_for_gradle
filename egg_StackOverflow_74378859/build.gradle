@@ -1,0 +1,54 @@
+
+plugins {
+    id 'java'
+    id 'checkstyle'
+}
+
+repositories {
+    mavenCentral()
+}
+
+checkstyle {
+    toolVersion = '8.6'
+    configFile = rootProject.file('config/checkstyle/checkstyle.xml')
+}
+
+def MAIN_PROP_FILE = 'main.properties'
+def TEST_PROP_FILE = 'test.properties'
+
+task antReportSummaryMain(type:Exec) {
+    workingDir project.projectDir 
+
+    commandLine 'ant', 'report-summary', '-propertyfile', MAIN_PROP_FILE
+
+    standardOutput = new ByteArrayOutputStream()
+
+    ext.output = {
+        return standardOutput.toString()
+    }
+
+    doLast {
+        println "TRACER antReportSummaryMain output:"
+        println ext.output()
+    }
+}
+
+task antReportSummaryTest(type:Exec) {
+    workingDir project.projectDir 
+
+    commandLine 'ant', 'report-summary', '-propertyfile', TEST_PROP_FILE
+
+    standardOutput = new ByteArrayOutputStream()
+
+    ext.output = {
+        return standardOutput.toString()
+    }
+
+    doLast {
+        println "TRACER antReportSummaryTest output:"
+        println ext.output()
+    }
+}
+
+checkstyleMain.finalizedBy antReportSummaryMain
+checkstyleTest.finalizedBy antReportSummaryTest

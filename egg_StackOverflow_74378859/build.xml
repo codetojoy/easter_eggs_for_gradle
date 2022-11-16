@@ -1,0 +1,11 @@
+<project name="apache-ant project" default="run">  
+    <property name="report.prop1" value = "def_val_1"></property>  
+    <property name="report.prop2" value = "def_val_2"></property>  
+    <property name="report.prop3" value = "def_val_3"></property>  
+    <target name="report-summary">  
+        <echo>prop1: ${report.prop1}</echo>  
+        <echo>prop2: ${report.prop2}</echo>  
+        <echo>prop3: ${report.prop3}</echo>  
+        <echo>Ready.</echo>
+    </target>  
+</project>  

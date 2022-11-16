@@ -13,37 +13,28 @@ checkstyle {
     configFile = rootProject.file('config/checkstyle/checkstyle.xml')
 }
 
-def MAIN_PROP_FILE = 'main.properties'
-def TEST_PROP_FILE = 'test.properties'
+abstract class AntReportSummaryTask extends Exec {
+    AntReportSummaryTask() {
+        workingDir project.projectDir 
 
-task antReportSummaryMain(type:Exec) {
-    workingDir project.projectDir 
+        standardOutput = new ByteArrayOutputStream()
 
-    commandLine 'ant', 'report-summary', '-propertyfile', MAIN_PROP_FILE
-
-    standardOutput = new ByteArrayOutputStream()
-
-    ext.output = {
-        return standardOutput.toString()
+        ext.output = {
+            return standardOutput.toString()
+        }
     }
+}
 
+tasks.register('antReportSummaryMain', AntReportSummaryTask) {
+    commandLine 'ant', 'report-summary', '-propertyfile', 'main.properties'
     doLast {
         println "TRACER antReportSummaryMain output:"
         println ext.output()
     }
 }
 
-task antReportSummaryTest(type:Exec) {
-    workingDir project.projectDir 
-
-    commandLine 'ant', 'report-summary', '-propertyfile', TEST_PROP_FILE
-
-    standardOutput = new ByteArrayOutputStream()
-
-    ext.output = {
-        return standardOutput.toString()
-    }
-
+tasks.register('antReportSummaryTest', AntReportSummaryTask) {
+    commandLine 'ant', 'report-summary', '-propertyfile', 'test.properties'
     doLast {
         println "TRACER antReportSummaryTest output:"
         println ext.output()

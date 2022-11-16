@@ -1,0 +1,11 @@
+syntax = "proto3";
+package mypackage;
+option java_package = "tld.domain.protos.mypackage";
+option java_outer_classname = "MyTypeA";
+
+import "mypackage/TypeB.proto";
+
+message TypeA {
+  string field1 = 1;
+  TypeB field2 = 2;
+}

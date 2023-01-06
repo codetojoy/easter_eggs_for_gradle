@@ -9,7 +9,9 @@ repositories {
 }
 
 dependencies {
-    testImplementation 'junit:junit:4.12'
+    // testImplementation 'junit:junit:4.12'
+    testImplementation(platform("org.junit:junit-bom:5.9.1"))
+    testImplementation("org.junit.jupiter:junit-jupiter")
     testImplementation group: 'org.mockito', name: 'mockito-core', version: '4.11.0'
 }
 

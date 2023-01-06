@@ -12,3 +12,9 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     testImplementation group: 'org.mockito', name: 'mockito-core', version: '4.11.0'
 }
+
+test {
+    testLogging {
+        events "passed", "failed"
+    }
+}

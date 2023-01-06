@@ -17,6 +17,7 @@ public class AuthenServiceTestCase {
     }
 
     @Test
+    @DisplayName("auth service test")
     public void authenticate() throws UserNotFoundException {
         when(ur.validate("abc", "123")).thenReturn(false);
 
